@@ -2,14 +2,47 @@ import React from 'react';
 import Axios from 'axios';
 import Styled from 'styled-components';
 
+const MainDiv = Styled.div`
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: center;
+  flex-direction: column;
+`
 
+const Form = Styled.form`
+  display: flex;
+  justify-content: center;
+`
+
+const Input = Styled.input`
+  display: flex;
+  width: 40%;
+`
 const Div = Styled.div`
   display: flex;
   border: 1px solid black;
   background: dodgerblue;
-  max-width: 800px;
-  height: 100px;
+  max-width: 100%;
+  height: 5rem;
+  width: 80%;
   margin: 10px auto;
+`
+
+const Button = Styled.button`
+  display: flex;
+  width: 5rem;
+  border-radius: 25%;
+  background: black;
+  color: white;
+  margin: 0 auto;
+`
+
+const GetJokesButton = Styled(Button)`
+  margin: 1rem auto;
+  padding: 2rem;
+  justify-content: center;
+  text-align: center;
 `
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.Component {
@@ -66,7 +99,7 @@ class App extends React.Component {
     this.login(user)
   }
 
-  getUsers = (token) => {
+  getJokes = (token) => {
 
     Axios.defaults.headers.common['Authorization'] = token;
     Axios
@@ -81,35 +114,35 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.eventHandler}>
-          <input
+      <MainDiv>
+        <Form onSubmit={this.eventHandler}>
+          <Input
             type='text'
             name='username'
           />
-          <input
+          <Input
             type='text'
             name='password'
           />
-          <button>Register</button>
-        </form>
-        <form onSubmit={this.eventHandler1}>
-          <input
+          <Button>Register</Button>
+        </Form>
+        <Form onSubmit={this.eventHandler1}>
+          <Input
             type='text'
             name='username'
           />
-          <input
+          <Input
             type='text'
             name='password'
           />
-          <button>Login</button>
-        </form>
-        <button onClick={() => this.getUsers(this.state.token)}>Get Users</button>
-        {this.state.jokes.map(user => {
+          <Button>Login</Button>
+        </Form>
+        <GetJokesButton onClick={() => this.getJokes(this.state.token)}>Get Dad Jokes</GetJokesButton>
+        {this.state.jokes.map(joke => {
 
-          return <Div><p>Joke: {user.joke}</p></Div>
+          return <Div><p>Dad Joke: {joke.joke}</p></Div>
         })}
-      </div>
+      </MainDiv>
     );
   }
 }
